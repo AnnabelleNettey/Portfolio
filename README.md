@@ -12,4 +12,6 @@ Health Receptionist @ Guelph Communith Health Centre
 Studied the effectiveness of a single-dose cholera vaccination compared to the standard two-dose 
 regimen in preventing admission to the emergency room (ER) due to cholera.
 - Cholera Photo
+- article link
+- dataset link
 Credit: Andrey_Popov / Shutterstock.com
