@@ -12,5 +12,5 @@ regimen in preventing admission to the emergency room (ER) due to cholera.
 
 [Article](https://www.theguardian.com/global-development/2024/mar/21/cholera-now-threatens-1bn-people-its-time-to-finish-what-we-began-in-the-19th-century)
 
-[Project](/assets/Comparison of Dose Vaccination regimes for Cholera.Rmd)
+[Project]
 
