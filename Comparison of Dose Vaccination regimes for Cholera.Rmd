@@ -1,0 +1,270 @@
+---
+title: "Comparison of Dose Vaccination regimes for Cholera in Zambia"
+output: html_document
+date: "2025"
+---
+
+## About Study
+
+The Guardian recently reported on the emergence of cholera – the very disease that made John Snow a
+pioneer of epidemiology. In that report, it is mentioned that in Zambia, for financial reasons, the
+standard two-dose oral vaccination regimen is stretched to single-dose vaccinations. This is done also
+due to evidence that a single dose provides “some” protection and can help contain outbreaks.
+
+### Research Question 
+
+The purpose of the study conducted at a local hospital was to determine if a single-dose cholera vaccination is as effective as the two-dose
+regimen to prevent admission to a hospital’s emergency room (ER).
+
+### About Dataset
+The data are in a CSV file called CHOLERA.csv.
+
+It contains data collected among patients in the local hospital. These patients have been
+vaccinated over the last year and have recently come back with a diagnosis of cholera. Some of these patients needed emergency care and were admitted to the ER, while others were treated ambulatory. The age of the patients at vaccination was also recorded.
+
+
+The variables are:
+ID – patient id number ranging from 1 to 142
+ER – admitted to ER: 1 = yes, 0 = no
+VAC – vaccination regimen: 1 = single-dose, 2 = two-dose
+Age – age in years 
+
+## Investigating Cholera Vaccination Data
+
+```{r}
+# Loading Packages
+library(ggplot2)
+```
+
+
+### Importing Dataset
+
+The dataset is in a CSV file, so I will be using the read.csv() function to import the dataset.
+
+```{r}
+# import the data
+cholera <- read.csv(file = "C:/Documents/R/CHOLERA.csv", header = TRUE)
+```
+
+
+### Basics About Dataset
+```{r}
+# Number of Columns
+ncol(cholera)
+```
+
+
+```{r}
+# Sample Size
+length(cholera$ER)
+
+```
+
+Therefore, there are 142 patients in this study.
+
+####Age
+
+```{r}
+# First six observations of dataset
+head(cholera)
+```
+From the first six observations, we can see that most patients are middle-aged (40 to 65 years of age) 
+
+To investigate the age distribution of the patients in this study, a histogram can be used.
+
+```{r}
+#Age distribution Histogram
+
+p <- ggplot(data = cholera, aes(x = AGE)) + geom_histogram(binwidth = 2, fill = "#69b3a2") + ggtitle(" Age Distribution of Zambian Cholera Patients") + xlab(" Age of Patients, years") + ylab ("Number of Patients") + theme(plot.title = element_text(hjust = 0.5))
+p
+```
+
+Most of the patients in this study are around 30-60 years of age.
+
+The average age, as well as the youngest and oldest patient, can be found using the following functions:
+
+```{r}
+summary(cholera$AGE)
+```
+The average age of patients in this study is 43 years old. The youngest patient is 3 years old, and the oldest patient is 92 years of age. Therefore, most participants in this study are indeed middle-aged. There is also a large range in age in this study (89 years of age).
+
+#### Vaccination Status
+
+Next, we will investigate the vaccination status of patients.
+
+To visualize this, a bar plot can be used.
+
+```{r}
+# Converting VAC into categorical variable
+cholera$VAC.f <- as.factor(cholera$VAC)
+```
+
+
+```{r}
+# Creating a bar plot
+p3 <- ggplot(data = cholera, aes(x = VAC.f, fill = VAC.f)) + geom_bar() + ggtitle(" Vaccination Regime of Zambian Cholera Patients") + xlab(" Vaccination Regime, dose") + ylab ("Number of Patients") + theme(plot.title = element_text(hjust = 0.5))
+p3 + scale_fill_discrete(name = " Vaccination Dose")
+
+```
+From this graph, it is clear that more patients in this study received a two-dose vaccination regimen compared to the one-dose vaccination regimen. However, it is hard to determine the exact number of patients for each regime from this graph.
+
+
+```{r}
+# Finding the number of people who had the 1 dose and the 2 dose vaccination regime 
+table(cholera$VAC)
+```
+27 patients had the 1-dose vaccination regimen, and 115 patients had the 2-dose vaccination regimen. 
+
+#### ER status
+
+We can also determine the total number of patients that were admitted to the ER for severe cholera.
+
+```{r}
+# Converting ER into categorical variable
+cholera$ER.f <- as.factor(cholera$ER)
+```
+
+
+```{r}
+p3 <- ggplot(data = cholera, aes(x = ER.f, fill = ER.f)) + geom_bar() + ggtitle("ER Status of of Zambian Cholera Patients") + xlab(" Admission to ER") + ylab ("Number of Patients") + theme(plot.title = element_text(hjust = 0.5))
+p3 + scale_fill_manual(values=c("lightblue2", "coral3")) 
+p3 + scale_fill_discrete(name = " ER status ")
+
+```
+
+We can see that more patients were not admitted to the ER for severe cholera.
+
+```{r}
+#Finding the number of people who were admitted and not admitted to the ER
+table(cholera$ER)
+```
+Only 33 patients were admitted to the ER, compared to the 109 patients who did not require emergency treatment for cholera.
+
+It is reasonable to assume that this is because most patients received the two-dose vaccination regime.
+
+
+To investigate admission to the emergency department (ER) based on vaccination regime (VAC), a two-by-two contingency table can be constructed.
+
+For reference, 
+ER – admitted to ER: 1 = yes, 0 = no
+VAC – vaccination regimen: 1 = single-dose, 2 = two-dose
+
+```{r}
+# 2x2 table comparing ER status with vaccination regime
+ERVAC_table <- table(cholera$VAC, cholera$ER)
+names(dimnames(ERVAC_table)) <-c("Vaccination Regime", "ER Status")
+ERVAC_table
+```
+
+The proportions of the 2x2 table can also be calculated.
+
+
+```{r}
+# Proportions of 2x2 table
+prop.table(ERVAC_table)
+names(dimnames(ERVAC_table)) <-c("Vaccination Regime", "ER Status")
+```
+
+The two-by-two table reveals that 18 out of the 27 patients that received the single dose were admitted to the ER (66.7%). In comparison, 15 out of the 100 patients that received the two dose regime were admitted to the ER (13.0%). Therefore, in this study, ER visits increased by 53.7% when patients received the single dose regime.
+
+
+
+We can also investigate ER status with both Age and Vaccination Status together using a jitter plot:
+
+```{r}
+# Creating a jitter plot
+p4 <- ggplot(cholera, aes(x= ER, y = AGE, color = factor(VAC))) + 
+  geom_jitter(width = 0.2) +
+  facet_wrap(~VAC)
+
+p4 + xlab("ER status") + ylab("Age")
+
+p4 + scale_color_manual(values = c("chocolate3", "cadetblue1"))
+
+p4 + theme(legend.position = "none")
+  
+```
+It seems that receiving 2 doses protects young people from being admitted for severe cholera compared to older people. However, across all ages, the 2-dose vaccination leads to more patients avoiding emergency care for cholera.
+
+##Statistical Analysis
+We are trying to determine if a single-dose cholera vaccination is as effective as the two-dose regimen to prevent admission to a hospital’s emergency room (ER).
+
+Therefore, we are mainly focusing on two variables, vaccination status (VAC) and emergency room status (ER), which are both binary.
+
+Therefore, a binary logistic regression model can be used to answer this research question. This model will investigate whether there is an association between vaccination regime and ER status.
+
+Null Hypothesis: There is no association between vaccination regime and the ER status.
+
+Alternate Hypothesis: There is an association between vaccination regime and the ER status.
+
+
+During our investigation of the dataset, we saw that younger patients were generally not admitted to the ER for cholera if they had 2 doses of the cholera vaccine. It is reasonable to assume that age plays a factor in the severity of cholera symptoms and thus the need for emergency care. For example, we expect very young children and the elderly to be more negatively impacted by cholera since their immune systems are weaker.
+
+Thus, the age of the patients (AGE) will also be included in our logistic regression model.
+
+```{r}
+# Creating a logistic regression model for cholera called "CR"
+CR <- glm(ER~VAC+AGE, data = cholera, family = binomial)
+
+# Summary of logistic regression model "CR"
+summary(CR)
+
+```
+
+### Interpretation:
+
+The p-value for vaccination regime (VAC) and age of patients (AGE) is less than 0.05. Therefore, the null hypothesis is rejected at the 5% significance level. There is an association between vaccination regimen and admission to the emergency department (p<0.001). Age is also a predictor of ER visit (p=0.00165). 
+
+The slope for the vaccine regime (-3.47) is negative. Therefore, patients who receive the two-dose regimen were less likely to be admitted to the ER for cholera. In contrast, the slope for age is positive (0.050). People who are older were more likely to be admitted to the ER, although this is a small increase.
+
+#### Odds Ratio
+
+We can also compare how likely patients with the one-dose vaccine were admitted to the emergency department due to cholera using the odds ratio, OR.
+
+To do this, we take the slope parameter of vaccination status, -3.47, and exponentiate it.
+
+```{r}
+# Fisher test to calculate OR
+fisher.test(ERVAC_table)
+```
+
+```{r}
+exp(-3.47903)
+```
+The odds ratio is 0.031, which is less than 1.
+Before we interpret this value, we should note that vaccination status is a protective factor, and its odds ratio tends to be less than 1.
+To make the odds ratio and its interpretation more practical, we can take the reciprocal.
+
+```{r}
+#Reciprocal of OR
+1/0.03083731
+
+```
+As a result of taking the reciprocal, the correct interpretation of the odds ratio is :
+
+Patients that received the one-dose cholera vaccine are 32 times more likely to be admitted to the ER compared to those with the two-dose cholera vaccine.
+
+## Evaluating Fit of Model
+We can evaluate how well our logistic regression model discriminated between cases of ER status (yes and no) using the area under the curve (AUC).
+
+To do this, the epiDisplay package will be used.
+
+```{r}
+# Loading epiDisplay package
+library(epiDisplay)
+```
+
+```{r}
+lroc(CR, graph = TRUE)$auc
+```
+
+The area under the curve is 0.85. Since this value is close to 1, the model is able to discriminate cases of ER well.
+
+## Conclusion: Reflection &  Recommendation
+In this study, the likelihood of being admitted to the hospital for cholera was higher for those who received the one-dose cholera vaccine compared to the two-dose vaccine for all age groups. Older patients were slightly more likely to be admitted to the hospital for cholera. 
+
+It is recommended that Zambia restore and offer the standard two-dose vaccine regimen over the single-dose regimen. It is more effective at preventing severe cholera that leads to admission to the hospital compared to the single-dose vaccine. 
+
+However, it is important to remember the financial and other restraints, such as logistical barriers, that prevent the country from offering the standard two-dose vaccine. Currently, the continent of Africa is facing a shortage of cholera vaccines This is amid a spike in  floods driven by climate change that are increasing cholera outbreaks.
+
+In the end, this study highlights that the single-dose regimen cannot provide as much protection against cholera compared to the standard two-dose regimen.
