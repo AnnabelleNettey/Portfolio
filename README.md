@@ -8,9 +8,10 @@ Bachelor of Science, BS | Western University
 #### Comparison of Dose Vaccination Regimes for Cholera in Zambia
 Studied the effectiveness of a single-dose cholera vaccination compared to the standard two-dose 
 regimen in preventing admission to the emergency room (ER) due to cholera.
-[Cholera Vaccine](/assets/cholera vaccine.png)
+
+<img width="1440" height="788" alt="image" src="https://github.com/user-attachments/assets/da09ff8e-a6ae-4c2c-be2c-4684c972a9ba" />
 
 [Article](https://www.theguardian.com/global-development/2024/mar/21/cholera-now-threatens-1bn-people-its-time-to-finish-what-we-began-in-the-19th-century)
 
-[Project](Comparison of Dose Vaccination regimes for Cholera.Rmd)
+
 
