@@ -1,5 +1,5 @@
-# Epidemiology
-Technical Skills: R, SPSS/STATA
+# Epidemiology: Infectious Diseases | Zoonotic Diseases | Enteric Illnesses
+
 ### Education
 Master of Public Health, MPH | University of Guelph
 Bachelor of Science, BS | Western University
@@ -8,7 +8,7 @@ Bachelor of Science, BS | Western University
 #### Comparison of Dose Vaccination Regimes for Cholera in Zambia
 Studied the effectiveness of a single-dose cholera vaccination compared to the standard two-dose 
 regimen in preventing admission to the emergency room (ER) due to cholera.
-logo: /assets/cholera vaccine.png
-Article : https://www.theguardian.com/global-development/2024/mar/21/cholera-now-threatens-1bn-people-its-time-to-finish-what-we-began-in-the-19th-century 
+[Cholera Vaccine] (/assets/cholera vaccine.png)
+[Article] (https://www.theguardian.com/global-development/2024/mar/21/cholera-now-threatens-1bn-people-its-time-to-finish-what-we-began-in-the-19th-century)
 CSV File: 
 
