@@ -1,8 +1,8 @@
 # Epidemiology: Infectious Diseases | Zoonotic Diseases | Enteric Illnesses
 
 ### Education
-Master of Public Health, MPH | University of Guelph
-Bachelor of Science, BS | Western University
+- Master of Public Health, MPH | University of Guelph
+- Bachelor of Science, BS | Western University
 
 ### Projects
 #### Comparison of Dose Vaccination Regimes for Cholera in Zambia
